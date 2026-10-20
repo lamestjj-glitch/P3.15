@@ -1,3 +1,25 @@
+# Python 3.15 啟動路徑修復補丁
+
+[下載 python315_startup_patch.zip](https://github.com/lamestjj-glitch/P3.15/raw/refs/heads/crawler-package-download/python315_startup_patch.zip)
+
+適用情況：Windows 顯示 `Failed to launch ... Python313\python.exe (0x80070003)`，但已有可用的 Python 3.15。此錯誤發生在 Python 程式執行前。
+
+將補丁全部解壓到原程式資料夾，覆蓋同名檔案，接著在該資料夾的 CMD 執行：
+
+```cmd
+py -3.15 start_capture.py
+```
+
+補丁共三個來源檔：`START_CAPTURE.cmd`、`start_capture.py`、`capture_four_lanes.py`，依賴現有的 `async_crawler.py`、`four_lane_crawler.py` 及兩份 requirements 檔案。
+
+啟動器會先確認直譯器能實際執行；既有 `.crawler-venv` 無法執行、缺少 Python 或版本不同時，會保留為 `.crawler-venv.backup-*` 並以指定的 Python 重建。依賴會按原本 requirements 安裝。CMD 也支援 `CRAWLER_PYTHON` 指定完整 exe 路徑，並逐一測試 PATH 候選。
+
+18 項啟動回歸測試通過；已在 Linux Python 3.12 重現失效直譯器、驗證備份保留、真實依賴重裝及暖啟動重用。已確認全部依賴存在 Windows x64／CPython 3.15 相容 wheel；尚未原生執行 Windows 或 Python 3.15，也尚未驗證兩站線上 API。
+
+ZIP：10,298 bytes。SHA-256：`80b499be219db15a54ba782f0a10d09c6216013d84d7191ab3e61e70ff7467e5`。
+
+---
+
 # Python 單檔啟動補丁
 
 [下載 capture_four_lanes_python_patch.zip](https://github.com/lamestjj-glitch/P3.15/raw/refs/heads/crawler-package-download/capture_four_lanes_python_patch.zip)
