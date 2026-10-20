@@ -1,3 +1,27 @@
+# 一次性匿名回應樣本匯出補丁
+
+[下載 capture_samples_patch.zip](https://github.com/lamestjj-glitch/P3.15/raw/refs/heads/crawler-package-download/capture_samples_patch.zip)
+
+1. 停止原本的持續輪詢。把補丁的 `capture_four_lanes.py` 及 `sample_export.py` 放回原程式資料夾（覆蓋／新增）。
+2. 在原資料夾 CMD 執行：
+
+```cmd
+py -3.15 start_capture.py --export-samples
+```
+
+3. 輸入實際 CDP 埠並確認四頁篩選；在兩站租售的四個分頁各手動搜尋一次。列表需能正常回傳。
+4. 成功後會在原程式資料夾產生 `samples_for_review.zip`。先解壓檢查內容，再將這個新產生的 ZIP 拖入聊天上傳。
+
+此模式只監聽既有瀏覽器的回應、匯出後退出；不啟動 curl_cffi 輪詢，也不變更 429 處理。原先只印 dict 的日誌沒有保存歷史回應，無法由舊日誌還原樣本。
+
+樣本 ZIP 包含四路 JSON 與說明，每個陣列最多三筆並記錄原長度。未知葉值匿名，保留可讀欄位名、部分公開房源 ID 及分頁／狀態值；HTML 提供受限骨架。Cookie、headers、UA 與完整請求網址不匯出。自動處理無法辨識所有可能的動態欄位名，分享前仍需檢查；這是結構素材，不能作為可執行配置。若 ZIP 已存在，程式停止而不覆寫，可用 `--export-samples another-samples.zip` 換名。
+
+已從補丁解壓副本套用到測試目錄執行 64 項本機測試，全數通過且零跳過，包括真實本機 Chromium/CDP、單次匯出、匿名化及既有檔案保護；未在原生 Windows 或實際站台執行新匯出模式。
+
+補丁 ZIP：12,907 bytes，兩個 Python 來源檔。SHA-256：`e2268ee00535ad2fd7c0c2ba922af90f5a32a08e2f488c919945300e47e1e28a`。
+
+---
+
 # Chrome profile 配對單檔補丁
 
 [下載 capture_profile_patch.zip](https://github.com/lamestjj-glitch/P3.15/raw/refs/heads/crawler-package-download/capture_profile_patch.zip)
