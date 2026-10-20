@@ -1,3 +1,27 @@
+# BitBrowser 代理與 DNS 重試補丁
+
+[下載 proxy_dns_fix_patch.zip](https://github.com/lamestjj-glitch/P3.15/raw/refs/heads/crawler-package-download/proxy_dns_fix_patch.zip)
+
+使用者的 BitBrowser 有設定代理。原程式從瀏覽器擷取 Cookie、UA 與列表請求，但未設定相同代理；畫面中的 curl 代碼 6 是目標名稱解析失敗，尚未收到 HTTP 回應。本補丁新增安全的本機代理輸入入口。
+
+先停止程式，把 ZIP 的三個 Python 檔案全部解壓到既有程式資料夾（覆蓋／新增），然後使用：
+
+```cmd
+py -3.15 start_with_proxy.py
+```
+
+照 BitBrowser 此瀏覽器環境輸入代理類型、主機、埠、帳號及密碼。HTTP 代理請選 http，與目標網址是否 https 無關；SOCKS5 會明確使用 socks5h，讓代理解析目標名稱。帳密輸入隱藏，僅透過本次子程序環境傳入，不保存設定，也不印出代理 URL。本次四路使用同一代理，忽略繼承的分站設定；接著按原流程輸入 CDP，四頁各搜尋一次。
+
+兩個 curl Session 都會套用代理，明確指定時不再受 NO_PROXY/no_proxy 靜默繞過。也支援 CRAWLER_PROXY 或優先的 HSE28_PROXY／HOUSE730_PROXY 由本機安全環境注入，配合原 start_capture.py；沒有明確代理時保留原環境行為。不要把機密環境值貼到聊天。
+
+DNS 代碼 5（代理名稱）或 6（目標名稱）會讓同站新增請求暫停 30 秒，舊的在途失敗不疊加暫停或逐筆警告。並發不足仍逐筆記數與跳過，首次提示，後續每路最多 30 秒摘要一次。原始請求本文、Cookie、監控狀態與 HTTP 429 處理不變。
+
+從補丁解壓副本執行 138 項本機測試，全過、零跳過；包括實際本機 HTTP 代理路由、NO_PROXY 繞過保護、兩站各自代理、DNS 批次退避、取消清理、舊成功不清除暫停與 429 冷卻保留。另驗證 Python 3.12 語法與無第三方依賴的啟動器 --help。尚未在原生 Windows、使用者的代理或兩站真實會話執行，不保證代理可用或網站接受。
+
+ZIP：16,587 bytes，3 個來源檔及1份說明。SHA-256：`45562d62b66e05a6d9e4255f3015b1d308ad75bffa4ddeafdb8f017ca4e2cf61`。
+
+---
+
 # 28Hse 業主篩選陣列格式修復補丁
 
 [下載 hse_filter_array_fix_patch.zip](https://github.com/lamestjj-glitch/P3.15/raw/refs/heads/crawler-package-download/hse_filter_array_fix_patch.zip)
