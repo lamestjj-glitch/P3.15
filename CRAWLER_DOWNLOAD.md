@@ -1,3 +1,21 @@
+# Python 單檔啟動補丁
+
+[下載 capture_four_lanes_python_patch.zip](https://github.com/lamestjj-glitch/P3.15/raw/refs/heads/crawler-package-download/capture_four_lanes_python_patch.zip)
+
+此補丁只包含 `capture_four_lanes.py`。先備份原檔，解壓後覆蓋到原程式目錄，再使用目前的 Python 執行：
+
+```text
+python capture_four_lanes.py
+```
+
+保留既有核心、依賴與設定；不附啟動器。無參數時互動輸入 CDP 與間隔，Windows 直接開啟無參數的 `.py` 後會保留視窗；缺依賴時顯示 Python 安裝指令。保留舊版可替換的函式介面。
+
+原 ZIP 單檔覆蓋後 22 項測試通過，另有 11 項啟動回歸測試通過。測試環境為 Linux Python 3.13；尚未實機測試 Python 3.15 或原生 Windows，未變更套件版本需求。
+
+ZIP 7,045 bytes，1 個檔案。SHA-256：`cca4c8cd2fe7be8fb4eee5816249505b963e9a52a1ecf8e68385ba0b94633d1d`
+
+---
+
 # 四路爬蟲下載：Windows 啟動修正版
 
 下載 [curl_cffi_four_lanes_verified.zip](https://github.com/lamestjj-glitch/P3.15/raw/refs/heads/crawler-package-download/curl_cffi_four_lanes_verified.zip)。
