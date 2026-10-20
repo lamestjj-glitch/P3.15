@@ -1,3 +1,21 @@
+# 28Hse 業主篩選陣列格式修復補丁
+
+[下載 hse_filter_array_fix_patch.zip](https://github.com/lamestjj-glitch/P3.15/raw/refs/heads/crawler-package-download/hse_filter_array_fix_patch.zip)
+
+此單檔補丁套用於已安裝首次發現監控補丁的程式資料夾，包含前次 UTF-8 擷取順序及診斷修正。先停止程式，解壓覆蓋原有 `capture_four_lanes.py`，再執行：
+
+```cmd
+py -3.15 start_capture.py
+```
+
+實際網站以表單送出 `landlordAgency=["LANDLORD"]`，舊程式將整段 JSON 陣列字串與純文字 `LANDLORD` 比較，因而把業主列表判為篩選未匹配。本次只在核對時解析欄位中的 JSON 陣列，原始請求本文不變。重複的 `sortBy=latest` 可接受；不同值、混入仲介值、空陣列、非字串、重複 JSON 鍵衝突仍會拒絕。未通過時分別顯示 landlordAgency 與 sortBy 的固定狀態，不輸出任意原始欄位值。
+
+補丁只有 `capture_four_lanes.py`；429、排程及監控儲存程式未改。四頁依原方式各搜尋一次即可。已從 ZIP 解壓副本執行 114 項本機測試，全過、零跳過，包括實際表單格式、巢狀 form_data、原始 UTF-8 位元組保真及衝突拒絕。另已驗證 Python 3.12 語法與無第三方依賴的 --help；尚未在使用者 Windows／真實網站會話執行新補丁。
+
+ZIP：9,696 bytes，1 個來源檔。SHA-256：`67d07f1d89752b189d075b5a57d38e89816df8aee075adb1bb601df579e79d32`。
+
+---
+
 # 擷取階段 UTF-8 與等待診斷單檔補丁
 
 [下載 capture_decode_fix_patch.zip](https://github.com/lamestjj-glitch/P3.15/raw/refs/heads/crawler-package-download/capture_decode_fix_patch.zip)
