@@ -1,3 +1,25 @@
+# 擷取階段 UTF-8 與等待診斷單檔補丁
+
+[下載 capture_decode_fix_patch.zip](https://github.com/lamestjj-glitch/P3.15/raw/refs/heads/crawler-package-download/capture_decode_fix_patch.zip)
+
+此補丁僅含 `capture_four_lanes.py`，套用在已安裝首次發現監控補丁的原程式資料夾。先停止目前程式，解壓覆蓋原檔，再執行：
+
+```cmd
+py -3.15 start_capture.py
+```
+
+四頁各搜尋一次後等候；無需連續點擊。原本先解碼所有網站背景 POST 的順序已修正：先解析回應並辨識列表，才讀取並嚴格解碼列表請求本文；無關的 binary 背景請求會直接略過。真正列表本文若非 UTF-8 會顯示固定提示並拒絕該模板，沒有 ignore/replace 或猜編碼，不改動重播位元組。
+
+尚未齊全的路線每 15 秒顯示等待診斷：搜尋回應數、HTTP 異常狀態計數、非 JSON、非列表、業主／最新篩選未匹配、非 UTF-8 本文、讀取錯誤、頁面路徑改變、超過大小限制或缺少 UA。只列固定原因及數字，不輸出原始請求、完整 URL、Cookie 或回應內容。
+
+使用者最新畫面顯示 House730 租售已擷取，但未顯示 28Hse 成功；因此仍在四路擷取階段，尚未進入 ID 基線監控。此補丁修正背景 POST 解碼誤報並提供診斷；28Hse 未成功的實際原因仍須依新診斷確認。429、排程與已保存監控狀態不變。
+
+已由補丁解壓副本執行 105 項本機測試，全過且零跳過，含新4項背景二進位忽略、真實非 UTF-8 模板拒絕、原篩選保留及中文本文保真。尚未在使用者的 Windows／網站會話驗證新修正。
+
+ZIP：8,946 bytes，1 個來源檔。SHA-256：`1b029e3f54c9f71ce079c2be1b107b860bf4b49c849def4386842bfa67b5924f`。
+
+---
+
 # 第一頁首次發現與持久去重補丁
 
 [下載 first_seen_monitor_patch.zip](https://github.com/lamestjj-glitch/P3.15/raw/refs/heads/crawler-package-download/first_seen_monitor_patch.zip)
