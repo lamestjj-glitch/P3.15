@@ -1,3 +1,30 @@
+# 第一頁首次發現與持久去重補丁
+
+[下載 first_seen_monitor_patch.zip](https://github.com/lamestjj-glitch/P3.15/raw/refs/heads/crawler-package-download/first_seen_monitor_patch.zip)
+
+將補丁的五個 Python 檔案全部放入原程式資料夾（覆蓋／新增）。停止舊程式，再執行：
+
+```cmd
+py -3.15 start_capture.py
+```
+
+四個列表分頁都設定業主、最新排序並停在第 1 頁，依提示輸入實際 CDP 埠與間隔，各手動搜尋一次。一般啟動模式已接上新監控，不用加額外旗標；`--export-samples` 仍只匯出樣本。
+
+- 第一個有效回應只顯示基線筆數，不逐個輸出已有盤。
+- 後續只列「首次發現」的公開 ID 與可驗證連結；重複 ID、消失後再出現、較舊請求編號的延遲回應不重複報。
+- 每 60 秒印統計；結果在 `monitor_data/new_listings.jsonl`，狀態在 `monitor_data/seen.sqlite3`。保留整個資料夾，重啟後繼續去重；更改搜尋條件另建基線。
+- 28Hse 僅讀主列表 HTML；House730 僅讀 `result.data`，不將貸款、推薦廣告旁支視為房源。失敗或未知格式不會清掉基線。
+
+首次發現只表示本程式第一次看到該 ID，不能證明剛發布。只監控第一頁可辨識 ID，不自動翻頁，離線或限流期間可能漏過滑出第一頁的盤。尚未加入電話查詢、價格變動或外部通知。
+
+429、頻率預設及原有 HTTP 排程程式碼逐位元組保持不變。Cookie、UA、原始請求與完整回應不寫入監控結果；上傳的使用者樣本僅在本機驗證，未包含在公開補丁。詳見壓縮檔內 README_FIRST_SEEN.txt。
+
+從補丁解壓副本套用到測試目錄後，101 項本機測試全過、零跳過，包括真實本機 HTTP 輪詢至新 ID 存檔、CDP、亂序、重啟去重與輸出失敗恢復；尚未在原生 Windows 或實際兩站執行新監控模式。
+
+ZIP：18,756 bytes，5 個來源檔及1份說明。SHA-256：`95865716a1961a6e8b07eeeb2680c96b7b0f5fb905ddc0227e54ae981b0a42e9`。
+
+---
+
 # 一次性匿名回應樣本匯出補丁
 
 [下載 capture_samples_patch.zip](https://github.com/lamestjj-glitch/P3.15/raw/refs/heads/crawler-package-download/capture_samples_patch.zip)
