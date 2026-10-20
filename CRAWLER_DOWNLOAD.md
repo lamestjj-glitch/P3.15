@@ -1,3 +1,23 @@
+# Chrome profile 配對單檔補丁
+
+[下載 capture_profile_patch.zip](https://github.com/lamestjj-glitch/P3.15/raw/refs/heads/crawler-package-download/capture_profile_patch.zip)
+
+適用情況：Python 已啟動、四路列表已擷取，但出現「原瀏覽器版本沒有可自動選定的 profile」。
+
+此 ZIP 只包含 `capture_four_lanes.py`，備份原檔後解壓覆蓋到既有程式資料夾，再執行：
+
+```cmd
+py -3.15 start_capture.py
+```
+
+自動辨識桌面 Chrome 後，優先選同主版本 profile；curl_cffi 沒有該版本時，以數字版本順序選最近較舊的桌面 Chrome profile 並顯示近似配對警告。主版本與選定 profile 會按站顯示；原始 UA、Cookie、標頭和 Body 不進入診斷日誌。保留各站顯式 override；無法識別桌面 Chrome 或低於最舊支援版本時，會提供具體的每站 override 參數。Edge、Android、iOS 等不會自動誤配桌面 Chrome。
+
+8 項 profile 回歸測試及 6 項擷取／本機 CDP 測試全部通過。近似 profile 並不保證網站接受；403 或已辨識的驗證頁仍按既有機制停止同站請求。此補丁尚未在使用者的實際兩站會話驗證。
+
+ZIP：7,564 bytes，1 個檔案。SHA-256：`a97c224acbf7fb5d49e86cb8972401ce19eeb8604a7b61a6768552a9e87dbda2`。
+
+---
+
 # Python 3.15 啟動路徑修復補丁
 
 [下載 python315_startup_patch.zip](https://github.com/lamestjj-glitch/P3.15/raw/refs/heads/crawler-package-download/python315_startup_patch.zip)
