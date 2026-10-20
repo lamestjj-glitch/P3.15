@@ -1,3 +1,29 @@
+# PandaMonitorV2 2.0.0 完整 Python 版
+
+[下載完整 PandaMonitorV2.rar](https://github.com/lamestjj-glitch/P3.15/raw/refs/heads/crawler-package-download/PandaMonitorV2.rar)
+
+[ZIP 備用下載](https://github.com/lamestjj-glitch/P3.15/raw/refs/heads/crawler-package-download/PandaMonitorV2.zip)
+
+完整解壓後，在 PandaMonitorV2 資料夾雙擊 `START.cmd`，或以目前可用的 Python 執行：
+
+```cmd
+py -3.15 start_v2.py
+```
+
+此版本以提供的老版 PandaMonitor 介面及電話解析為基礎，接入獨立 curl_cffi.AsyncSession／asyncio 控制器；沒有同時啟動舊列表引擎。四路每路預設 0.5 秒，可各自調整，並發受限時跳過節拍、不積壓補發。介面可配置代理、原瀏覽器 UA、隨機 UA 與 cf_clearance；隨機 UA 每站選一次，有 clearance 時保留相符身份。403 或驗證回應停止同站新增請求並提示 Cookie 可能失效，另一站獨立運行。403 本身不能證明 Cookie 已失效。
+
+在「V2 連線與排程」輸入實際本機 CDP 埠和與 BitBrowser 相同的代理，保留原瀏覽器四個業主＋最新／第 1 頁列表；按開始後各搜尋一次。首次有效回應建立基線，後續只處理首次發現的 ID；新 ID 經持久電話佇列查詢兩站原有電話 API，再沿用電話去重、歷史、剪貼簿及介面結果流程。原版通知／WhatsApp 控制項保留，啟動時預設關閉；擴展網站插件不屬本次 V2 範圍，已隱藏。
+
+完整內容 83 個檔案，含來源、啟動器、說明、依賴及離線測試；不包含使用者上傳的樣本、實際會話、代理帳密、Cookie、資料庫或本機執行環境。V2 資料與舊版分開，首次僅複製已知的電話／歷史檔，原檔不變。詳細使用及限制見 `README_FIRST.txt`。
+
+已對 RAR 檢查 CRC、解壓內容與逐檔 SHA-256 manifest，並從其解壓副本執行 138 項核心測試＋66 項 V2 測試，合計 204 項全過、零跳過；含真實本機 HTTP／代理、Chromium CDP、Tk 介面及完整新 ID→電話工作→保存確認流程，另通過 Python 3.12 語法與 GUI 啟動檢查。未在原生 Windows、使用者真實代理／Cookie或兩站真實會話執行。500ms 是發起目標，不保證回應在500ms內完成；第一頁監控在離線／限流時可能漏盤，不自動完成 Turnstile。
+
+RAR：349,287 bytes，SHA-256：`d187ea1b78724e574ccf2da8e390e086076bbf2837f3c1268c07f64c4eff55d0`。
+
+ZIP：365,567 bytes，SHA-256：`9d6e9369712f030f0f75783ea52d15998c9b93dd23c770945774ef7f639361fa`。
+
+---
+
 # BitBrowser 代理與 DNS 重試補丁
 
 [下載 proxy_dns_fix_patch.zip](https://github.com/lamestjj-glitch/P3.15/raw/refs/heads/crawler-package-download/proxy_dns_fix_patch.zip)
